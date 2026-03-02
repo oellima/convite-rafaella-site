@@ -165,21 +165,25 @@ function App() {
       return;
     }
 
-    // LÓGICA DE VALIDAÇÃO PERSONALIZADA
-    if (!nome.trim() && !telefone.trim()) {
+    // Validação de Telefone Brasileiro (Regex)
+    // Aceita formatos como: 83999298689 ou 8388887777
+    const telefoneLimpo = telefone.replace(/\D/g, ''); // Remove parênteses, espaços ou traços
+    const telefoneValido = /^[1-9]{2}9?[0-9]{8}$/.test(telefoneLimpo);
+
+    if (!nome.trim() && !telefoneLimpo) {
       return alert("Por favor, preencha seu nome e telefone");
     }
     if (!nome.trim()) {
       return alert("Por favor, preencha o seu nome");
     }
-    if (!telefone.trim() || telefone.length < 8) {
-      return alert("Por favor, preencha o seu telefone");
+    if (!telefoneValido) {
+      return alert("Por favor, preencha um telefone válido com DDD (Ex: 83999998888)");
     }
     
     try {
-      await axios.post(`${urlBackend}/confirmar`, { nome, telefone });
+      await axios.post(`${urlBackend}/confirmar`, { nome, telefone: telefoneLimpo });
       setExibirMensagem(true);
-      const msg = `Olá, confirmei presença no aniversário da Rafaella!%0ANome: ${nome}%0ATelefone: ${telefone}`;
+      const msg = `Olá, confirmei presença no aniversário da Rafaella!%0ANome: ${nome}%0ATelefone: ${telefoneLimpo}`;
       setTimeout(() => {
         window.open(`https://wa.me/${telDanielle}?text=${msg}`, '_blank');
         limparTudo();
