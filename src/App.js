@@ -27,7 +27,7 @@ const EstiloGeral = () => (
     }
 
     .container-principal { 
-      display: flex; flex-direction: column; align-items: center; 
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: 20px; text-align: center; min-height: 100vh; position: relative;
     }
 
@@ -55,7 +55,6 @@ const EstiloGeral = () => (
       line-height: 1.6; background: rgba(255,255,255,0.7); padding: 15px; border-radius: 15px;
     }
 
-    /* CORREÇÃO DA FOTO URGENTE */
     .moldura-foto { 
       width: 220px; height: 220px; border-radius: 50%; 
       border: 8px solid white; overflow: hidden; 
@@ -63,10 +62,7 @@ const EstiloGeral = () => (
       display: flex; align-items: center; justify-content: center;
       background: white;
     }
-    .foto-img { 
-      width: 100%; height: 100%; object-fit: cover; /* Mantém dentro do círculo sem esticar */
-      display: block;
-    }
+    .foto-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     .card-info, .card-convite {
       background: white; padding: 25px; border-radius: 25px;
@@ -83,7 +79,6 @@ const EstiloGeral = () => (
     .input-custom:focus { border-color: #ff69b4; }
     .input-custom:focus::placeholder { color: transparent; }
 
-    /* CORREÇÃO DO EFEITO NO BOTÃO CONFIRMAR */
     .botao-magico {
       width: 100%; padding: 18px; border: none;
       background: linear-gradient(135deg, #ffb6c1, #ff69b4);
@@ -111,9 +106,13 @@ const EstiloGeral = () => (
     .zap-container:hover .zap-texto { color: white; }
     .zap-texto { color: #25D366; font-weight: bold; font-size: 18px; transition: 0.3s; }
     
-    /* ESTILO DO MAPA */
     .mapa-titulo { color: #ba55d3; font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
     .mapa-moldura { width: 100%; border-radius: 20px; overflow: hidden; border: 5px solid white; height: 250px; }
+
+    /* ESTILOS TELA SECRETA CENTRALIZADA */
+    .tabela-admin { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+    .tabela-admin th, .tabela-admin td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
+    .btn-lixeira { background: none; border: none; cursor: pointer; font-size: 18px; }
   `}</style>
 );
 
@@ -140,21 +139,42 @@ function App() {
 
   const telDanielle = "5583999298689";
   const urlBackend = 'https://convite-rafa-backend.onrender.com';
-  const enderecoMapa = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.2158866388487!2d-34.83602492415162!3d-7.095166469562767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ace83ec677b63f%3A0x28972e616c27806a!2sR.%20Bacharel%20Irenaldo%20de%20Albuquerque%20Chaves%2C%20201%20-%20Aeroclube%2C%20Jo%C3%A3o%20Pessoa%20-%20PB%2C%2058036-460!5e0!3m2!1spt-BR!2sbr!4v1709400000000!5m2!1spt-BR!2sbr";
 
   const limparTudo = () => {
     setNome(''); setTelefone(''); setExibirMensagem(false); setDadosAdmin(null);
   };
 
+  const buscarLista = async () => {
+    try {
+      const res = await axios.get(`${urlBackend}/admin/lista`);
+      setDadosAdmin(res.data);
+    } catch (e) { alert("Erro ao carregar lista"); }
+  };
+
+  const apagarConvidado = async (tel) => {
+    if (!window.confirm("Deseja remover este convidado?")) return;
+    try {
+      await axios.delete(`${urlBackend}/admin/apagar/${tel}`);
+      buscarLista();
+    } catch (e) { alert("Erro ao apagar"); }
+  };
+
   const confirmar = async () => {
     if (nome.toLowerCase() === 'spyscreen') {
-      try {
-        const res = await axios.get(`${urlBackend}/admin/lista`);
-        setDadosAdmin(res.data);
-      } catch (e) { alert("Erro ao carregar lista"); }
+      buscarLista();
       return;
     }
-    if (!nome.trim() || telefone.length < 8) return alert("Por favor, preencha seu nome e telefone!");
+
+    // LÓGICA DE VALIDAÇÃO PERSONALIZADA
+    if (!nome.trim() && !telefone.trim()) {
+      return alert("Por favor, preencha seu nome e telefone");
+    }
+    if (!nome.trim()) {
+      return alert("Por favor, preencha o seu nome");
+    }
+    if (!telefone.trim() || telefone.length < 8) {
+      return alert("Por favor, preencha o seu telefone");
+    }
     
     try {
       await axios.post(`${urlBackend}/confirmar`, { nome, telefone });
@@ -173,15 +193,36 @@ function App() {
       <ElementosAnimados />
       
       {dadosAdmin ? (
-        <div className="card-convite" style={{maxWidth: '500px'}}>
+        <div className="card-convite" style={{maxWidth: '500px', margin: 'auto'}}>
           <h2>Lista de Convidados 📊</h2>
-          <button onClick={limparTudo} className="botao-magico">Voltar</button>
+          <p>Total de convidados: <strong>{dadosAdmin.total || 0}</strong></p>
+          
+          <table className="tabela-admin">
+            <thead>
+              <tr><th>Nome</th><th>Número</th><th>Ação</th></tr>
+            </thead>
+            <tbody>
+              {dadosAdmin.convidados && dadosAdmin.convidados.length > 0 ? (
+                dadosAdmin.convidados.map((c, i) => (
+                  <tr key={i}>
+                    <td>{c.nome}</td>
+                    <td>{c.telefone}</td>
+                    <td><button className="btn-lixeira" onClick={() => apagarConvidado(c.telefone)}>🗑️</button></td>
+                  </tr>
+                ))
+              ) : (
+                <tr><td colSpan="3" style={{textAlign: 'center'}}>Nenhum convidado confirmado ainda.</td></tr>
+              )}
+            </tbody>
+          </table>
+          
+          <button onClick={limparTudo} className="botao-magico" style={{marginTop:'20px'}}>Voltar</button>
         </div>
       ) : (
         <>
           <header>
             <h1>Rafaella</h1>
-            <div className="subtitulo">Faz 5 aninhos! 🎈</div>
+            <div className="subtitulo">Faz 5 Aninhos! 🎈</div>
             <p className="texto-convidativo">
               Prepare o seu coração para uma tarde mágica e cheia de alegria! Estou fazendo 5 aninhos e a diversão é garantida. Venha comemorar comigo! ✨
             </p>
@@ -193,13 +234,13 @@ function App() {
 
           <div className="card-info">
             <p>📅 <strong>7 de Março às 14:00h</strong></p>
-            <p>📍 Rua Bacharel Irenaldo de Albuquerque Chaves, 201, Aeroclube - Cond. Val Paraíso (área de lazer)</p>
+            <p>📍 Rua Bacharel Irenaldo de Albuquerque Chaves, 201, Aeroclube (Val Paraíso)</p>
           </div>
 
           <div className="card-convite">
             <p style={{color: '#ff69b4', fontWeight: 'bold', marginBottom: '15px'}}>Confirme sua presença: ✨</p>
-            <input className="input-custom" placeholder="Nome do amiguinho(a)" value={nome} onChange={e => setNome(e.target.value)} />
-            <input className="input-custom" placeholder="Telefone (DDD + Número) do responsável" type="tel" value={telefone} onChange={e => setTelefone(e.target.value)} />
+            <input className="input-custom" placeholder="Nome do Convidado" value={nome} onChange={e => setNome(e.target.value)} />
+            <input className="input-custom" placeholder="WhatsApp (DDD + Número)" type="tel" value={telefone} onChange={e => setTelefone(e.target.value)} />
             
             {!exibirMensagem ? (
               <button onClick={confirmar} className="botao-magico">Confirmar Presença! 🎂</button>
@@ -221,7 +262,7 @@ function App() {
             <div className="mapa-moldura">
               <iframe 
                 title="mapa" 
-                src={enderecoMapa}
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.231221762744!2d-34.84279722421332!3d-7.099167992904037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ace83ec6958897%3A0xc3f1f33f009f5835!2sR.%20Bacharel%20Irenaldo%20de%20Albuquerque%20Chaves%2C%20201%20-%20Aeroclube%2C%20Jo%C3%A3o%20Pessoa%20-%20PB%2C%2058036-460!5e0!3m2!1spt-BR!2sbr!4v1710000000000"
                 width="100%" 
                 height="100%" 
                 style={{border:0}} 
