@@ -7,7 +7,7 @@ const EstiloGeral = () => (
     body { 
       margin: 0; padding: 0; 
       background-color: #fff5f8; 
-      font-family: 'Segoe UI', Roboto, sans-serif; 
+      font-family: sans-serif !important; 
       -webkit-text-size-adjust: 100%;
     }
     .container-principal { 
@@ -15,40 +15,45 @@ const EstiloGeral = () => (
       padding: 20px; text-align: center; min-height: 100vh;
     }
     .card-info, .card-convite {
-      background: white; padding: 20px; border-radius: 20px;
+      background: white; padding: 25px; border-radius: 20px;
       width: 100%; max-width: 400px; margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      box-shadow: 0 8px 20px rgba(255, 182, 193, 0.2);
+      border: 1px solid #fff0f5;
     }
-    h1 { color: #ff69b4; font-size: 2.5rem; margin: 10px 0; }
-    h2 { color: #ba55d3; font-size: 1.5rem; }
-    p { font-size: 16px; color: #555; line-height: 1.5; }
+    h1 { color: #ff69b4; font-size: 3rem; margin: 10px 0; font-family: cursive; }
+    h2 { color: #ba55d3; font-size: 1.6rem; margin-bottom: 20px; }
+    p { font-size: 17px; color: #555; line-height: 1.5; font-style: normal !important; }
     
     .moldura-foto { 
       width: 180px; height: 180px; border-radius: 50%; 
-      border: 5px solid white; overflow: hidden; 
-      margin: 20px auto; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border: 6px solid white; overflow: hidden; 
+      margin: 20px auto; box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
     }
     .foto-img { width: 100%; height: 100%; object-fit: cover; }
 
     .input-custom {
-      width: 100%; padding: 12px; margin-bottom: 10px;
-      border: 2px solid #ffe4e1; border-radius: 10px;
-      font-size: 16px; outline: none;
+      width: 100%; padding: 14px; margin-bottom: 12px;
+      border: 2px solid #ffe4e1; border-radius: 12px;
+      font-size: 16px; outline: none; text-align: center;
     }
     .botao-magico {
-      width: 100%; padding: 15px; border: none;
+      width: 100%; padding: 18px; border: none;
       background: linear-gradient(135deg, #ffb6c1, #ff69b4);
       color: white; font-weight: bold; font-size: 18px;
-      border-radius: 10px; cursor: pointer;
+      border-radius: 15px; cursor: pointer; transition: 0.3s;
     }
+    .botao-magico:hover { transform: scale(1.02); }
+    
     .zap-link { 
-      display: block; margin-top: 15px; color: #25D366; 
-      text-decoration: none; font-weight: bold; 
+      display: inline-block; margin-top: 15px; color: #25D366; 
+      text-decoration: none; font-weight: bold; font-size: 14px;
     }
     .mapa-moldura { 
       width: 100%; border-radius: 15px; overflow: hidden; 
-      border: 3px solid white; margin-top: 10px;
+      border: 4px solid white; margin-top: 10px; height: 200px;
     }
+    .admin-lista { text-align: left; font-size: 14px; width: 100%; }
+    .admin-item { border-bottom: 1px solid #eee; padding: 8px 0; display: flex; justify-content: space-between; }
   `}</style>
 );
 
@@ -57,7 +62,6 @@ function App() {
   const [telefone, setTelefone] = useState('');
   const [exibirMensagem, setExibirMensagem] = useState(false);
   const [dadosAdmin, setDadosAdmin] = useState(null);
-  const [paginaAtual, setPaginaAtual] = useState(1);
 
   const telDanielle = "5583999298689";
   const enderecoFesta = "Rua Bacharel Irenaldo de Albuquerque Chaves, 201, Aeroclube, João Pessoa - PB (área de lazer do condomínio Val Paraíso)";
@@ -71,12 +75,14 @@ function App() {
       } catch (e) { alert("Erro ao carregar lista"); }
       return;
     }
-    if (!nome || !telefone) return alert("Preencha tudo!");
+    if (!nome.trim() || telefone.length < 8) return alert("Preencha seu nome e telefone corretamente!");
+    
     try {
       await axios.post('https://convite-rafa-backend.onrender.com/confirmar', { nome, telefone });
       setExibirMensagem(true);
-      window.open(`https://wa.me/${telDanielle}?text=Confirmei presença! Nome: ${nome}`, '_blank');
-    } catch (e) { alert("Erro ao confirmar"); }
+      const msg = `Olá! Confirmei presença no aniversário da Rafaella! 🎂%0AConvidado: ${nome}`;
+      window.open(`https://wa.me/${telDanielle}?text=${msg}`, '_blank');
+    } catch (e) { alert("Erro ao confirmar presença."); }
   };
 
   return (
@@ -85,46 +91,61 @@ function App() {
       
       {dadosAdmin ? (
         <div className="card-convite">
-          <h2>Lista de Convidados</h2>
-          <p>Total: {dadosAdmin.total}</p>
-          <button onClick={() => setDadosAdmin(null)} className="botao-magico">Voltar</button>
+          <h2>Lista de Convidados 📊</h2>
+          <p>Total: <strong>{dadosAdmin.total}</strong></p>
+          <div className="admin-lista">
+            {dadosAdmin.convidados?.map((c, i) => (
+              <div key={i} className="admin-item">
+                <span>{c.nome}</span>
+                <span style={{color: '#888'}}>{c.telefone}</span>
+              </div>
+            ))}
+          </div>
+          <button onClick={() => setDadosAdmin(null)} className="botao-magico" style={{marginTop: '20px'}}>Voltar</button>
         </div>
       ) : (
         <>
-          <h1>Rafaella</h1>
-          <h2>Faz 5 Aninhos! 🎈</h2>
+          <header>
+            <h1>Rafaella</h1>
+            <h2>Faz 5 Aninhos! 🎈</h2>
+          </header>
           
           <div className="moldura-foto">
             <img src="/foto-rafa.jpg" alt="Rafaella" className="foto-img" />
           </div>
 
           <div className="card-info">
-            <p>📅 {horarioFesta}</p>
+            <p>📅 <strong>{horarioFesta}</strong></p>
             <p>📍 {enderecoFesta}</p>
           </div>
 
           <div className="card-convite">
-            <p>Confirme sua presença: ✨</p>
-            <input className="input-custom" placeholder="Seu Nome" value={nome} onChange={e => setNome(e.target.value)} />
-            <input className="input-custom" placeholder="Seu Telefone" value={telefone} onChange={e => setTelefone(e.target.value)} />
+            <p style={{color: '#ff69b4', fontWeight: 'bold', marginBottom: '15px'}}>Confirme sua presença: ✨</p>
+            <input className="input-custom" placeholder="Nome do Convidado" value={nome} onChange={e => setNome(e.target.value)} />
+            <input className="input-custom" placeholder="WhatsApp com DDD" type="tel" value={telefone} onChange={e => setTelefone(e.target.value)} />
             
             {!exibirMensagem ? (
-              <button onClick={confirmar} className="botao-magico">Confirmar Presença!</button>
+              <button onClick={confirmar} className="botao-magico">Confirmar Presença! 🎂</button>
             ) : (
-              <p style={{color: '#ff69b4', fontWeight: 'bold'}}>Confirmado com sucesso! 🎂</p>
+              <div style={{background: '#fdf5ff', padding: '15px', borderRadius: '10px', border: '2px dashed #ffb6c1'}}>
+                <p style={{color: '#ff69b4', margin: 0, fontWeight: 'bold'}}>Oba! Presença confirmada! 💖</p>
+              </div>
             )}
             
-            <a href={`https://wa.me/${telDanielle}`} className="zap-link">Falar com a mamãe 🟢</a>
+            <a href={`https://wa.me/${telDanielle}`} target="_blank" rel="noreferrer" className="zap-link">Falar com a mamãe da Rafa 🟢</a>
           </div>
 
-          <div className="card-info" style={{padding: 0}}>
+          <div className="card-info" style={{padding: '5px'}}>
+            <p style={{fontSize: '14px', marginBottom: '10px'}}>Como chegar:</p>
             <div className="mapa-moldura">
-              <iframe title="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.2723652614345!2d-34.8398452!3d-7.0943969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ace83ec67e9e7b%3A0xc3b5e40632df377a!2sR.%20Bacharel%20Irenaldo%20de%20Albuquerque%20Chaves%2C%20201%20-%20Aeroclube%2C%20Jo%C3%A3o%20Pessoa%20-%20PB!5e0!3m2!1spt-BR!2sbr!4v1700000000000" width="100%" height="250" style={{border:0}} allowFullScreen="" loading="lazy"></iframe>
+              <iframe title="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.272186938928!2d-34.8340156!3d-7.0944883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ace839446d149f%3A0xc09207e26a760f33!2sR.%20Bacharel%20Irenaldo%20de%20Albuquerque%20Chaves%2C%20201%20-%20Aeroclube%2C%20Jo%C3%A3o%20Pessoa%20-%20PB%2C%2058036-460!5e0!3m2!1spt-BR!2sbr!4v1710000000000" width="100%" height="100%" style={{border:0}} allowFullScreen="" loading="lazy"></iframe>
             </div>
           </div>
         </>
       )}
-      <p style={{fontSize: '12px', marginTop: '20px'}}>Feito com ❤️ pelo Papai</p>
+      <footer style={{marginTop: '30px', paddingBottom: '20px'}}>
+        <p style={{fontSize: '12px', opacity: 0.7}}>Feito com ❤️ pelo Papai da Rafa</p>
+      </footer>
     </div>
   );
 }
