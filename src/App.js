@@ -110,7 +110,6 @@ function App() {
   const indiceUltimoItem = paginaAtual * itensPorPagina;
   const indicePrimeiroItem = indiceUltimoItem - itensPorPagina;
   const convidadosPaginados = dadosAdmin?.convidados.slice(indicePrimeiroItem, indiceUltimoItem) || [];
-  const totalPaginas = Math.ceil((dadosAdmin?.convidados.length || 0) / itensPorPagina);
 
   return (
     <div className="container-principal">
