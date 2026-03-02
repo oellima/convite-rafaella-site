@@ -1,57 +1,49 @@
-/* Reset básico para evitar o itálico indesejado e ajustar fontes */
+/* RESET ABSOLUTO - Isso remove o itálico de TUDO */
 * {
-  font-style: normal !important; /* Remove qualquer itálico estranho */
-  box-sizing: border-box;
+  font-style: normal !important;
+  font-display: swap;
+  text-decoration: none !important;
 }
 
-body {
+/* Garante que o corpo do site use uma fonte limpa e sem inclinação */
+body, html {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #fff5f8;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal !important;
 }
 
-/* Tamanho dos Textos Principais */
-p, span, label {
-  font-size: 18px !important; /* Tamanho confortável para leitura no celular */
-  line-height: 1.5;
-  color: #444;
+/* Tamanho de leitura ideal para Mobile (Convidados) */
+p, span, li, label, div {
+  font-size: 19px !important; /* Texto bem legível */
+  font-style: normal !important;
+  line-height: 1.6;
 }
 
-/* Títulos */
-h1 {
-  font-size: 28px !important;
-  color: #d81b60;
-  text-align: center;
+/* Títulos grandes e retos */
+h1, h2, h3, .titulo {
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  font-style: normal !important;
+  margin-bottom: 15px;
 }
 
-h2 {
-  font-size: 22px !important;
-  color: #ad1457;
+/* Ajuste nos campos de entrada para não ficarem finos demais */
+input, textarea, select {
+  font-size: 16px !important;
+  font-family: inherit !important;
+  font-style: normal !important;
+  padding: 12px !important;
 }
 
-/* Inputs (Campos de texto) - Evita que o iPhone dê zoom ao clicar */
-input {
-  font-size: 16px !important; 
-  padding: 12px;
-  width: 100%;
-  border: 2px solid #ffc1e3;
-  border-radius: 8px;
-}
-
-/* Botão de Confirmar */
+/* Botão principal */
 button {
-  font-size: 20px !important;
-  font-weight: bold;
-  padding: 15px;
-  width: 100%;
-  background-color: #ff4081;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  margin-top: 10px;
+  font-style: normal !important;
+  font-weight: bold !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .App {
