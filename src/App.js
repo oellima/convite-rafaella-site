@@ -42,7 +42,6 @@ const EstiloGeral = () => (
       color: white; font-weight: bold; font-size: 18px;
       border-radius: 15px; cursor: pointer; transition: 0.3s;
     }
-    .botao-magico:hover { transform: scale(1.02); }
     
     .zap-link { 
       display: inline-block; margin-top: 15px; color: #25D366; 
@@ -75,7 +74,7 @@ function App() {
       } catch (e) { alert("Erro ao carregar lista"); }
       return;
     }
-    if (!nome.trim() || telefone.length < 8) return alert("Preencha seu nome e telefone corretamente!");
+    if (!nome.trim() || telefone.length < 8) return alert("Preencha seu nome e telefone!");
     
     try {
       await axios.post('https://convite-rafa-backend.onrender.com/confirmar', { nome, telefone });
@@ -101,7 +100,7 @@ function App() {
               </div>
             ))}
           </div>
-          <button onClick={() => setDadosAdmin(null)} className="botao-magico" style={{marginTop: '20px'}}>Voltar</button>
+          <button onClick={() => setDadosAdmin(null)} className="botao-magico" style={{marginTop: '20px'}}>Sair do Painel</button>
         </div>
       ) : (
         <>
@@ -135,10 +134,10 @@ function App() {
             <a href={`https://wa.me/${telDanielle}`} target="_blank" rel="noreferrer" className="zap-link">Falar com a mamãe da Rafa 🟢</a>
           </div>
 
-          <div className="card-info" style={{padding: '5px'}}>
-            <p style={{fontSize: '14px', marginBottom: '10px'}}>Como chegar:</p>
+          <div className="card-info" style={{padding: '10px'}}>
+            <p style={{fontSize: '14px', marginBottom: '10px'}}>Localização:</p>
             <div className="mapa-moldura">
-              <iframe title="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.272186938928!2d-34.8340156!3d-7.0944883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ace839446d149f%3A0xc09207e26a760f33!2sR.%20Bacharel%20Irenaldo%20de%20Albuquerque%20Chaves%2C%20201%20-%20Aeroclube%2C%20Jo%C3%A3o%20Pessoa%20-%20PB%2C%2058036-460!5e0!3m2!1spt-BR!2sbr!4v1710000000000" width="100%" height="100%" style={{border:0}} allowFullScreen="" loading="lazy"></iframe>
+              <iframe title="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.327595632163!2d-34.8436417!3d-7.1065261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ace81036329063%3A0x6b77299a9d20f666!2sR.%20Bacharel%20Irenaldo%20de%20Albuquerque%20Chaves%2C%20201%20-%20Aeroclube%2C%20Jo%C3%A3o%20Pessoa%20-%20PB%2C%2058036-460!5e0!3m2!1spt-BR!2sbr!4v1700000000000" width="100%" height="100%" style={{border:0}} allowFullScreen="" loading="lazy"></iframe>
             </div>
           </div>
         </>
