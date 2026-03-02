@@ -49,8 +49,10 @@ function App() {
   const [exibirMensagem, setExibirMensagem] = useState(false);
   const [dadosAdmin, setDadosAdmin] = useState(null); 
   const [paginaAtual, setPaginaAtual] = useState(1);
-  const [placeholderNome, setPlaceholderNome] = useState('Nome do Convidado');
-  const [placeholderTel, setPlaceholderTel] = useState('DDD + Telefone (só números)');
+  
+  // Removi setPlaceholderNome e setPlaceholderTel daqui pois o erro acusou que não eram usados
+  const placeholderNome = 'Nome do Convidado';
+  const placeholderTel = 'DDD + Telefone (só números)';
   
   const itensPorPagina = 15;
   const telDanielle = "5583999298689"; 
