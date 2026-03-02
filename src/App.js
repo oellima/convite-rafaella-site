@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+  import React, { useState } from 'react'; //
+  import axios from 'axios'; //
 
-const EstiloGeral = () => (
-  <style>{`
+  const EstiloGeral = () => (
+    <style>{`
     @keyframes subir {
       0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
       100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
