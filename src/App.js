@@ -154,7 +154,7 @@ function App() {
       } catch (e) { alert("Erro ao carregar lista"); }
       return;
     }
-    if (!nome.trim() || telefone.length < 8) return alert("Preencha corretamente!");
+    if (!nome.trim() || telefone.length < 8) return alert("Por favor, preencha seu nome e telefone!");
     
     try {
       await axios.post(`${urlBackend}/confirmar`, { nome, telefone });
@@ -181,7 +181,7 @@ function App() {
         <>
           <header>
             <h1>Rafaella</h1>
-            <div className="subtitulo">Faz 5 Aninhos! 🎈</div>
+            <div className="subtitulo">Faz 5 aninhos! 🎈</div>
             <p className="texto-convidativo">
               Prepare o seu coração para uma tarde mágica e cheia de alegria! Estou fazendo 5 aninhos e a diversão é garantida. Venha comemorar comigo! ✨
             </p>
@@ -193,13 +193,13 @@ function App() {
 
           <div className="card-info">
             <p>📅 <strong>7 de Março às 14:00h</strong></p>
-            <p>📍 Rua Bacharel Irenaldo de Albuquerque Chaves, 201, Aeroclube (Val Paraíso)</p>
+            <p>📍 Rua Bacharel Irenaldo de Albuquerque Chaves, 201, Aeroclube - Cond. Val Paraíso (área de lazer)</p>
           </div>
 
           <div className="card-convite">
             <p style={{color: '#ff69b4', fontWeight: 'bold', marginBottom: '15px'}}>Confirme sua presença: ✨</p>
-            <input className="input-custom" placeholder="Nome do Convidado" value={nome} onChange={e => setNome(e.target.value)} />
-            <input className="input-custom" placeholder="WhatsApp (DDD + Número)" type="tel" value={telefone} onChange={e => setTelefone(e.target.value)} />
+            <input className="input-custom" placeholder="Nome do amiguinho(a)" value={nome} onChange={e => setNome(e.target.value)} />
+            <input className="input-custom" placeholder="Telefone (DDD + Número) do responsável" type="tel" value={telefone} onChange={e => setTelefone(e.target.value)} />
             
             {!exibirMensagem ? (
               <button onClick={confirmar} className="botao-magico">Confirmar Presença! 🎂</button>
