@@ -1,3 +1,59 @@
+/* Reset básico para evitar o itálico indesejado e ajustar fontes */
+* {
+  font-style: normal !important; /* Remove qualquer itálico estranho */
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #fff5f8;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tamanho dos Textos Principais */
+p, span, label {
+  font-size: 18px !important; /* Tamanho confortável para leitura no celular */
+  line-height: 1.5;
+  color: #444;
+}
+
+/* Títulos */
+h1 {
+  font-size: 28px !important;
+  color: #d81b60;
+  text-align: center;
+}
+
+h2 {
+  font-size: 22px !important;
+  color: #ad1457;
+}
+
+/* Inputs (Campos de texto) - Evita que o iPhone dê zoom ao clicar */
+input {
+  font-size: 16px !important; 
+  padding: 12px;
+  width: 100%;
+  border: 2px solid #ffc1e3;
+  border-radius: 8px;
+}
+
+/* Botão de Confirmar */
+button {
+  font-size: 20px !important;
+  font-weight: bold;
+  padding: 15px;
+  width: 100%;
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
 .App {
   text-align: center;
 }
