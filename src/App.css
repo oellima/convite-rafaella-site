@@ -1,86 +1,51 @@
-/* RESET ABSOLUTO - Isso remove o itálico de TUDO */
+/* 1. RESET TOTAL PARA MOBILE E PC */
 * {
   font-style: normal !important;
-  font-display: swap;
   text-decoration: none !important;
+  box-sizing: border-box;
 }
 
-/* Garante que o corpo do site use uma fonte limpa e sem inclinação */
-body, html {
+/* 2. CONFIGURAÇÃO DO CORPO (FONTE RETA) */
+body, html, #root {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-style: normal !important;
+  width: 100%;
+  font-family: sans-serif !important; /* Força uma fonte padrão sem serifa */
+  background-color: #fff5f8;
+  -webkit-text-size-adjust: 100%; /* Evita que o iPhone mude o tamanho sozinho */
 }
 
-/* Tamanho de leitura ideal para Mobile (Convidados) */
+/* 3. TEXTOS (EQUILIBRADO: Nem gigante, nem minúsculo) */
 p, span, li, label, div {
-  font-size: 19px !important; /* Texto bem legível */
-  font-style: normal !important;
-  line-height: 1.6;
+  font-size: 17px !important; 
+  line-height: 1.5;
+  color: #333;
 }
 
-/* Títulos grandes e retos */
-h1, h2, h3, .titulo {
-  font-size: 26px !important;
-  font-weight: 800 !important;
-  font-style: normal !important;
-  margin-bottom: 15px;
-}
-
-/* Ajuste nos campos de entrada para não ficarem finos demais */
-input, textarea, select {
-  font-size: 16px !important;
-  font-family: inherit !important;
-  font-style: normal !important;
-  padding: 12px !important;
-}
-
-/* Botão principal */
-button {
-  font-style: normal !important;
+/* 4. TÍTULOS */
+h1, h2, h3 {
+  font-size: 24px !important;
   font-weight: bold !important;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  color: #d81b60;
+  margin-top: 10px;
 }
 
-.App {
-  text-align: center;
+/* 5. INPUTS E BOTÕES */
+input {
+  font-size: 16px !important;
+  padding: 10px !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+button {
+  font-size: 18px !important;
+  padding: 12px !important;
+  font-weight: bold !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
+/* 6. REMOVENDO ESTILOS DO REACT QUE ATRAPALHAM */
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  background-color: transparent !important;
+  min-height: auto !important;
+  color: #333 !important;
+  font-size: 17px !important; /* Remove aquele calc() que deixava minúsculo */
 }
