@@ -16,7 +16,6 @@ const EstiloGeral = () => (
     
     body { 
       margin: 0; padding: 0; 
-      /* BACKGROUND MAIS INFANTIL */
       background: linear-gradient(135deg, #fff5f8 0%, #f3e5f5 50%, #ffffff 100%);
       font-family: 'Segoe UI', Roboto, sans-serif; 
       overflow-x: hidden;
@@ -34,7 +33,6 @@ const EstiloGeral = () => (
 
     header { margin-bottom: 35px; z-index: 10; }
     
-    /* TÍTULO COM FONTE CURSIVA E EFEITO */
     h1 { 
       font-family: 'Dancing Script', 'Cursive', serif;
       font-size: 4.5rem; 
@@ -57,6 +55,19 @@ const EstiloGeral = () => (
       line-height: 1.6; background: rgba(255,255,255,0.7); padding: 15px; border-radius: 15px;
     }
 
+    /* CORREÇÃO DA FOTO URGENTE */
+    .moldura-foto { 
+      width: 220px; height: 220px; border-radius: 50%; 
+      border: 8px solid white; overflow: hidden; 
+      margin: 0 auto 25px; box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
+      display: flex; align-items: center; justify-content: center;
+      background: white;
+    }
+    .foto-img { 
+      width: 100%; height: 100%; object-fit: cover; /* Mantém dentro do círculo sem esticar */
+      display: block;
+    }
+
     .card-info, .card-convite {
       background: white; padding: 25px; border-radius: 25px;
       width: 100%; max-width: 400px; margin-bottom: 20px;
@@ -70,17 +81,22 @@ const EstiloGeral = () => (
       font-size: 16px; outline: none; transition: 0.3s; text-align: center;
     }
     .input-custom:focus { border-color: #ff69b4; }
-    /* REMOVE PLACEHOLDER NO CLIQUE */
     .input-custom:focus::placeholder { color: transparent; }
 
+    /* CORREÇÃO DO EFEITO NO BOTÃO CONFIRMAR */
     .botao-magico {
       width: 100%; padding: 18px; border: none;
       background: linear-gradient(135deg, #ffb6c1, #ff69b4);
       color: white; font-weight: bold; font-size: 18px;
       border-radius: 15px; cursor: pointer; transition: 0.4s;
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+    }
+    .botao-magico:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.1);
+      box-shadow: 0 8px 25px rgba(255, 105, 180, 0.5);
     }
 
-    /* EFEITO NO BOTÃO WHATSAPP */
     .zap-container {
       display: flex; align-items: center; justify-content: center;
       margin-top: 20px; gap: 12px; text-decoration: none;
@@ -93,10 +109,11 @@ const EstiloGeral = () => (
       box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
     }
     .zap-container:hover .zap-texto { color: white; }
-
     .zap-texto { color: #25D366; font-weight: bold; font-size: 18px; transition: 0.3s; }
     
-    .mapa-moldura { width: 100%; border-radius: 20px; overflow: hidden; border: 5px solid white; height: 200px; }
+    /* ESTILO DO MAPA */
+    .mapa-titulo { color: #ba55d3; font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
+    .mapa-moldura { width: 100%; border-radius: 20px; overflow: hidden; border: 5px solid white; height: 250px; }
   `}</style>
 );
 
@@ -123,6 +140,7 @@ function App() {
 
   const telDanielle = "5583999298689";
   const urlBackend = 'https://convite-rafa-backend.onrender.com';
+  const enderecoMapa = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.2158866388487!2d-34.83602492415162!3d-7.095166469562767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ace83ec677b63f%3A0x28972e616c27806a!2sR.%20Bacharel%20Irenaldo%20de%20Albuquerque%20Chaves%2C%20201%20-%20Aeroclube%2C%20Jo%C3%A3o%20Pessoa%20-%20PB%2C%2058036-460!5e0!3m2!1spt-BR!2sbr!4v1709400000000!5m2!1spt-BR!2sbr";
 
   const limparTudo = () => {
     setNome(''); setTelefone(''); setExibirMensagem(false); setDadosAdmin(null);
@@ -198,9 +216,18 @@ function App() {
             </a>
           </div>
 
-          <div className="card-info" style={{padding: '5px'}}>
+          <div className="card-info" style={{padding: '15px'}}>
+            <div className="mapa-titulo">📍 Onde encontrar meu reino</div>
             <div className="mapa-moldura">
-              <iframe title="mapa" src="http://googleusercontent.com/maps.google.com/9" width="100%" height="100%" style={{border:0}} allowFullScreen="" loading="lazy"></iframe>
+              <iframe 
+                title="mapa" 
+                src={enderecoMapa}
+                width="100%" 
+                height="100%" 
+                style={{border:0}} 
+                allowFullScreen="" 
+                loading="lazy"
+              ></iframe>
             </div>
           </div>
         </>
