@@ -1,8 +1,8 @@
-  import React, { useState } from 'react'; //
-  import axios from 'axios'; //
+import React, { useState } from 'react';
+import axios from 'axios';
 
-  const EstiloGeral = () => (
-    <style>{`
+const EstiloGeral = () => (
+  <style>{`
     @keyframes subir {
       0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
       100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
@@ -33,7 +33,6 @@
       z-index: 10;
     }
 
-    /* TELA SECRETA CENTRALIZADA */
     .tela-admin {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       width: 100%; max-width: 500px; background: white; padding: 30px; 
@@ -68,6 +67,7 @@
       margin-top: 20px; gap: 12px; text-decoration: none;
       background: #f0fff4; padding: 15px; border-radius: 50px;
       border: 1px solid #25D366; transition: 0.3s;
+      cursor: pointer;
     }
     .zap-container:hover { background: #dcffe4; transform: scale(1.05); }
     .zap-texto { color: #25D366; font-weight: bold; font-size: 18px; }
@@ -104,6 +104,12 @@ function App() {
   const telDanielle = "5583999298689";
   const urlBackend = 'https://convite-rafa-backend.onrender.com';
 
+  const limparDados = () => {
+    setNome('');
+    setTelefone('');
+    setExibirMensagem(false);
+  };
+
   const buscarLista = async () => {
     try {
       const res = await axios.get(`${urlBackend}/admin/lista`);
@@ -129,12 +135,8 @@ function App() {
       await axios.post(`${urlBackend}/confirmar`, { nome, telefone });
       setExibirMensagem(true);
       const msg = `Olá! Confirmei presença para a Rafaella! Convidado: ${nome}`;
-      // Limpa os dados após 1 segundo
-      setTimeout(() => {
-        setNome('');
-        setTelefone('');
-      }, 1000);
       window.open(`https://wa.me/${telDanielle}?text=${encodeURIComponent(msg)}`, '_blank');
+      limparDados();
     } catch (e) { alert("Erro ao confirmar."); }
   };
 
@@ -189,11 +191,17 @@ function App() {
             ) : (
               <div style={{animation: 'fadeInDown 0.5s'}}>
                 <p style={{color: '#ff69b4', fontWeight: 'bold'}}>Oba! Presença confirmada! 💖</p>
-                <button onClick={() => setExibirMensagem(false)} className="botao-magico" style={{fontSize:'14px', padding:'10px'}}>Novo Cadastro</button>
+                <button onClick={limparDados} className="botao-magico" style={{fontSize:'14px', padding:'10px'}}>Novo Cadastro</button>
               </div>
             )}
             
-            <a href={`https://wa.me/${telDanielle}`} target="_blank" rel="noreferrer" className="zap-container">
+            <a 
+              href={`https://wa.me/${telDanielle}`} 
+              target="_blank" 
+              rel="noreferrer" 
+              className="zap-container"
+              onClick={limparDados}
+            >
               <span className="zap-texto">Falar com a mamãe</span>
               <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Whatsapp" width="30" />
             </a>
@@ -201,7 +209,7 @@ function App() {
 
           <div className="card-info" style={{padding: '5px'}}>
             <div className="mapa-moldura">
-              <iframe title="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.3259468579!2d-34.843!3d-7.08!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMDQnNDguMCJTIDM0wrA1MCczNC44Ilc!5e0!3m2!1spt-BR!2sbr!4v1620000000000" width="100%" height="100%" style={{border:0}} allowFullScreen="" loading="lazy"></iframe>
+              <iframe title="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.3514781700683!2d-34.8427776!3d-7.0851111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ace8123456789ab%3A0x123456789abcdef!2sRua%20Bacharel%20Irenaldo%20de%20Albuquerque%20Chaves%2C%20201%20-%20Aeroclube%2C%20Jo%C3%A3o%20Pessoa%20-%20PB!5e0!3m2!1spt-BR!2sbr!4v1700000000000" width="100%" height="100%" style={{border:0}} allowFullScreen="" loading="lazy"></iframe>
             </div>
           </div>
         </>
