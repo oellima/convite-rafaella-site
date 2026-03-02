@@ -4,93 +4,42 @@ import axios from 'axios';
 // 1. COMPONENTE DE ESTILO PARA FORÇAR O VISUAL CORRETO
 const EstiloForcado = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-    
+    /* FORÇAR FONTE PADRÃO DO SISTEMA (SEM DEPENDER DE GOOGLE FONTS) */
     * { 
-      font-family: 'Montserrat', sans-serif !important; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important; 
       font-style: normal !important; 
-      box-sizing: border-box;
+      box-sizing: border-box !important;
     }
     
     html, body { 
-      overflow-x: hidden; 
-      margin: 0; 
-      padding: 0; 
-      background-color: #fff5f8; 
-      -webkit-text-size-adjust: 100%;
-    }
-
-    .container-principal { 
-      min-height: 100vh; 
-      width: 100%; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      padding: 20px 15px; 
-      position: relative; 
-    }
-
-    /* Ajuste de textos para Mobile - SEM ITÁLICO */
-    p, span, div, label, li { 
-      font-size: 17px !important; 
-      line-height: 1.5 !important;
+      margin: 0 !important; 
+      padding: 0 !important; 
+      background-color: #fff5f8 !important; 
+      -webkit-text-size-adjust: 100% !important;
       font-style: normal !important;
-      color: #333;
+    }
+
+    /* MATAR O ITÁLICO DE TODAS AS TAGS POSSÍVEIS */
+    p, span, div, label, li, h1, h2, h3, i, em, b, strong { 
+      font-style: normal !important;
+      font-weight: normal; 
     }
 
     .frase-chamada { 
-      font-size: 15px !important; 
-      color: #db7093 !important; 
-      font-style: normal !important; /* MATANDO O ITÁLICO AQUI */
-      line-height: 1.4; 
-      margin-top: 10px; 
-    }
-
-    .titulo-rafa { color: #ff69b4; font-size: 3rem; margin: 0; text-shadow: 2px 2px 0px #fff; }
-    .subtitulo-rafa { color: #ba55d3; font-size: 1.6rem; margin-top: -5px; font-weight: bold; }
-
-    .moldura-foto { width: 180px; height: 180px; border-radius: 50%; border: 6px solid white; overflow: hidden; margin: 20px 0; box-shadow: 0 8px 20px rgba(255, 182, 193, 0.4); }
-    .foto-img { width: 100%; height: 100%; object-fit: cover; }
-    
-    .card-info, .card-convite { 
-      background: white; 
-      padding: 20px; 
-      border-radius: 20px; 
-      width: 100%; 
-      max-width: 380px; 
-      margin-bottom: 15px; 
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
-      text-align: center;
-    }
-
-    .input-custom { 
-      padding: 14px !important; 
-      border-radius: 12px; 
-      border: 2px solid #ffe4e1; 
-      margin-bottom: 12px; 
-      width: 100%; 
       font-size: 16px !important; 
-      font-style: normal !important;
+      color: #db7093 !important; 
+      font-style: normal !important; 
+      display: block;
+      margin: 10px auto;
     }
 
-    .botao-magico { 
-      background: linear-gradient(135deg, #ffb6c1 0%, #ff69b4 100%); 
-      border: none; 
-      padding: 18px; 
-      border-radius: 15px; 
-      color: white; 
-      font-weight: bold; 
-      width: 100%; 
-      font-size: 18px !important; 
-      font-style: normal !important;
-      cursor: pointer; 
+    /* FORÇAR TAMANHO NO MOBILE */
+    @media (max-width: 600px) {
+      p, span, div, label { font-size: 18px !important; }
+      h1 { font-size: 2.5rem !important; }
+      .input-custom { font-size: 16px !important; padding: 15px !important; }
+      .botao-magico { font-size: 20px !important; padding: 20px !important; }
     }
-
-    .zap-link-interno { display: flex; align-items: center; justify-content: center; text-decoration: none; margin-top: 15px; }
-    .zap-texto { color: #25D366; font-weight: bold; font-size: 14px; margin-right: 8px; }
-    
-    .sparkle { position: absolute; font-size: 24px; opacity: 0.4; pointer-events: none; }
-    .footer-centralizado-papai { margin-top: auto; padding: 20px 0; color: #db7093; font-size: 12px; }
   `}</style>
 );
 
