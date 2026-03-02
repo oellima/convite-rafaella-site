@@ -7,6 +7,11 @@ const EstiloGeral = () => (
       0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
       100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
     }
+    @keyframes pulso {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
     * { box-sizing: border-box; font-style: normal !important; }
     body { 
       margin: 0; padding: 0; 
@@ -22,9 +27,25 @@ const EstiloGeral = () => (
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: 20px; text-align: center; min-height: 100vh; position: relative;
     }
-    header { margin-bottom: 20px; z-index: 10; }
-    h1 { color: #ff69b4; font-size: 3.5rem; margin: 0; font-family: cursive; text-shadow: 2px 2px white; }
-    h2 { color: #ba55d3; font-size: 1.4rem; margin-top: -5px; }
+    
+    /* TÍTULO E SLOGAN ESTILIZADOS */
+    header { margin-bottom: 25px; z-index: 10; }
+    h1 { 
+      color: #ff69b4; 
+      font-size: 4rem; 
+      margin: 0; 
+      font-family: 'Dancing Script', cursive, serif; 
+      text-shadow: 3px 3px 0px white;
+      letter-spacing: -1px;
+    }
+    .subtitulo { color: #ba55d3; font-size: 1.6rem; font-weight: bold; margin-top: -10px; }
+    .texto-convidativo { 
+      color: #db7093; 
+      font-size: 1.1rem; 
+      margin: 10px auto; 
+      max-width: 300px;
+      line-height: 1.4;
+    }
     
     .card-info, .card-convite {
       background: white; padding: 25px; border-radius: 25px;
@@ -42,7 +63,7 @@ const EstiloGeral = () => (
     .moldura-foto { 
       width: 200px; height: 200px; border-radius: 50%; 
       border: 8px solid white; overflow: hidden; 
-      margin: 10px auto 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      margin: 0 auto 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
     .foto-img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -52,7 +73,6 @@ const EstiloGeral = () => (
       font-size: 16px; outline: none; transition: 0.3s; text-align: center;
     }
     .input-custom:focus { border-color: #ff69b4; }
-    .input-custom:focus::placeholder { color: transparent; }
 
     .botao-magico {
       width: 100%; padding: 18px; border: none;
@@ -62,14 +82,22 @@ const EstiloGeral = () => (
     }
     .botao-magico:hover { transform: translateY(-3px); filter: brightness(1.1); }
 
+    /* MENSAGEM DE SUCESSO ESTILIZADA */
+    .sucesso-container {
+      background: #fdf5ff;
+      padding: 20px;
+      border-radius: 20px;
+      border: 2px dashed #ffb6c1;
+      animation: pulso 2s infinite;
+    }
+    .sucesso-texto { color: #ff69b4; font-size: 1.3rem; font-weight: bold; margin: 0; }
+
     .zap-container {
       display: flex; align-items: center; justify-content: center;
       margin-top: 20px; gap: 12px; text-decoration: none;
       background: #f0fff4; padding: 15px; border-radius: 50px;
       border: 1px solid #25D366; transition: 0.3s;
-      cursor: pointer;
     }
-    .zap-container:hover { background: #dcffe4; transform: scale(1.05); }
     .zap-texto { color: #25D366; font-weight: bold; font-size: 18px; }
     
     .tabela-admin { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
@@ -104,10 +132,11 @@ function App() {
   const telDanielle = "5583999298689";
   const urlBackend = 'https://convite-rafa-backend.onrender.com';
 
-  const limparDados = () => {
+  const limparTudo = () => {
     setNome('');
     setTelefone('');
     setExibirMensagem(false);
+    setDadosAdmin(null);
   };
 
   const buscarLista = async () => {
@@ -130,14 +159,21 @@ function App() {
       buscarLista();
       return;
     }
-    if (!nome.trim() || telefone.length < 8) return alert("Preencha corretamente!");
+    if (!nome.trim() || telefone.length < 8) return alert("Por favor, preencha seu nome e telefone!");
+    
     try {
       await axios.post(`${urlBackend}/confirmar`, { nome, telefone });
       setExibirMensagem(true);
-      const msg = `Olá! Confirmei presença para a Rafaella! Convidado: ${nome}`;
-      window.open(`https://wa.me/${telDanielle}?text=${encodeURIComponent(msg)}`, '_blank');
-      limparDados();
-    } catch (e) { alert("Erro ao confirmar."); }
+      
+      const msg = `Olá, confirmei presença no aniversário da Rafaella!%0ANome: ${nome}%0ATelefone: ${telefone}`;
+      
+      // Delay de 3 segundos antes de abrir o WhatsApp e limpar
+      setTimeout(() => {
+        window.open(`https://wa.me/${telDanielle}?text=${msg}`, '_blank');
+        limparTudo();
+      }, 3000);
+      
+    } catch (e) { alert("Erro ao confirmar presença."); }
   };
 
   return (
@@ -163,13 +199,16 @@ function App() {
               ))}
             </tbody>
           </table>
-          <button onClick={() => setDadosAdmin(null)} className="botao-magico" style={{marginTop:'20px'}}>Voltar</button>
+          <button onClick={limparTudo} className="botao-magico" style={{marginTop:'20px'}}>Voltar</button>
         </div>
       ) : (
         <>
           <header>
             <h1>Rafaella</h1>
-            <h2>Faz 5 Aninhos! 🎈</h2>
+            <div className="subtitulo">Faz 5 Aninhos! 🎈</div>
+            <p className="texto-convidativo">
+              Prepare o seu coração para uma tarde mágica e cheia de alegria! ✨
+            </p>
           </header>
           
           <div className="moldura-foto">
@@ -189,19 +228,13 @@ function App() {
             {!exibirMensagem ? (
               <button onClick={confirmar} className="botao-magico">Confirmar Presença! 🎂</button>
             ) : (
-              <div style={{animation: 'fadeInDown 0.5s'}}>
-                <p style={{color: '#ff69b4', fontWeight: 'bold'}}>Oba! Presença confirmada! 💖</p>
-                <button onClick={limparDados} className="botao-magico" style={{fontSize:'14px', padding:'10px'}}>Novo Cadastro</button>
+              <div className="sucesso-container">
+                <p className="sucesso-texto">Oba, confirmei minha presença! 💖</p>
+                <small style={{color: '#ba55d3'}}>Redirecionando para o WhatsApp...</small>
               </div>
             )}
             
-            <a 
-              href={`https://wa.me/${telDanielle}`} 
-              target="_blank" 
-              rel="noreferrer" 
-              className="zap-container"
-              onClick={limparDados}
-            >
+            <a href={`https://wa.me/${telDanielle}`} target="_blank" rel="noreferrer" className="zap-container" onClick={limparTudo}>
               <span className="zap-texto">Falar com a mamãe</span>
               <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Whatsapp" width="30" />
             </a>
@@ -209,7 +242,7 @@ function App() {
 
           <div className="card-info" style={{padding: '5px'}}>
             <div className="mapa-moldura">
-              <iframe title="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.3514781700683!2d-34.8427776!3d-7.0851111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ace8123456789ab%3A0x123456789abcdef!2sRua%20Bacharel%20Irenaldo%20de%20Albuquerque%20Chaves%2C%20201%20-%20Aeroclube%2C%20Jo%C3%A3o%20Pessoa%20-%20PB!5e0!3m2!1spt-BR!2sbr!4v1700000000000" width="100%" height="100%" style={{border:0}} allowFullScreen="" loading="lazy"></iframe>
+              <iframe title="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.271363654406!2d-34.8329686!3d-7.1061327!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ace83ef0378051%3A0x6d97c0f18d7f7c!2sR.%20Bacharel%20Irenaldo%20de%20Albuquerque%20Chaves%2C%20201%20-%20Aeroclube%2C%20Jo%C3%A3o%20Pessoa%20-%20PB%2C%2058036-460!5e0!3m2!1spt-BR!2sbr!4v1700000000000" width="100%" height="100%" style={{border:0}} allowFullScreen="" loading="lazy"></iframe>
             </div>
           </div>
         </>
