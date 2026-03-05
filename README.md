@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+📝 Convite Digital - Aniversário Rafaella
+Este projeto é um convite digital interativo desenvolvido para celebrar o aniversário de 5 anos da Rafaella. O objetivo é fornecer aos convidados uma experiência moderna, centralizando informações essenciais como localização, confirmação de presença e sugestões de presentes de forma elegante e responsiva.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🚀 Funcionalidades:
 
-## Available Scripts
+Confirmação de Presença (RSVP): Integração para que os convidados confirmem sua ida de forma simplificada.
 
-In the project directory, you can run:
+Localização Integrada: Link direto para o Google Maps/Waze facilitando o deslocamento.
 
-### `npm start`
+Lista de Presentes: Seção dedicada com sugestões ou links externos.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Design Responsivo: Otimizado para visualização em dispositivos móveis (foco principal) e desktop
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+🛠️ Tecnologias Utilizadas
+O projeto foi construído utilizando as melhores práticas de desenvolvimento front-end moderno:
 
-### `npm test`
+ReactJS, HTML5 & CSS3: Estruturação e estilização personalizada com animações suaves.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+JavaScript (ES6+): Lógica da contagem regressiva e interatividade dos componentes.
 
-### `npm run build`
+Google Fonts: Tipografia selecionada para transmitir a sofisticação do evento.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Font Awesome: Ícones intuitivos para navegação.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+📂 Estrutura do Projeto
+Plaintext
+├── assets/          # Imagens, ícones e fontes
+├── css/             # Arquivos de estilização (Sass/CSS)
+├── js/              # Scripts de comportamento e lógica
+├── index.html       # Página principal do convite
+└── README.md        # Documentação do projeto
+🎨 Demonstração Visual
+Nota: O design foi pensado para refletir a personalidade da aniversariante, utilizando uma paleta de cores harmônica e elementos visuais que remetem à celebração.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+🔧 Como Executar o Projeto
+Clone o repositório:
 
-### `npm run eject`
+Bash
+git clone https://github.com/oellima/convite-rafaella-site.git
+Acesse a pasta do projeto:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Bash
+cd convite-rafaella-site
+Abra o arquivo principal:
+Basta abrir o arquivo index.html em qualquer navegador ou utilizar a extensão Live Server no VS Code para visualizar as alterações em tempo real.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+📧 Contato
+Desenvolvido por Leandro Almeida. Se tiver alguma dúvida sobre a implementação ou quiser trocar uma ideia sobre o código:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+GitHub: @oellima
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+LinkedIn: https://www.linkedin.com/in/leandro-almeida-566213b4/
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+🌟 Gostou do projeto?
+Se este template te ajudou de alguma forma, não esqueça de deixar uma estrela (⭐) no repositório!
